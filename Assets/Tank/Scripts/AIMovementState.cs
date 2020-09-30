@@ -26,6 +26,7 @@ public class AIMovementState : IEntityState
 
     public void ReadyForNextState() {
         //TODO : wait for the player to be finished
+        Debug.Log("FINISHED STATE");
         NextState = new AIMovementState();
         IsComplete = true;
     }

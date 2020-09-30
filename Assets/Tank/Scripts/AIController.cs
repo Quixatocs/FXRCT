@@ -1,7 +1,5 @@
-﻿
-using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.AI;
 
 public class AIController : StateMachine
 {
@@ -21,6 +19,7 @@ public class AIController : StateMachine
     #region Fields
 
     public Vector3 targetLocation;
+    private NavMeshAgent navMeshAgent;
 
     #endregion
     
@@ -37,14 +36,19 @@ public class AIController : StateMachine
     }
 
     private void Start() {
+        navMeshAgent = GetComponent<NavMeshAgent>();
         instance.SetState(new AIMovementState());
     }
 
     private void Update() {
         if (CurrentState.GetType() == typeof(AIMovementState)) {
             transform.LookAt(targetLocation);
-            transform.position = Vector3.MoveTowards(transform.position, targetLocation, 10f * Time.deltaTime);
-            if (transform.position.Approximately(targetLocation)) {
+
+            navMeshAgent.destination = targetLocation;
+            
+            if (Vector3.Distance(transform.position, targetLocation) < 0.5f) {
+                Debug.Log("GOT THERE");
+                navMeshAgent.destination = transform.position;
                 transform.position = targetLocation;
 
                 (CurrentState as AIMovementState).ReadyForNextState();
