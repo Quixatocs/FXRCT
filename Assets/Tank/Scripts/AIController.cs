@@ -51,9 +51,11 @@ public class AIController : StateMachine
                 navMeshAgent.destination = transform.position;
                 transform.position = targetLocation;
 
-                (CurrentState as AIMovementState).ReadyForNextState();
+                CurrentState.ProgressState();
             }
         }
+        
+        
     }
 
     #endregion

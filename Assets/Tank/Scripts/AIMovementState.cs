@@ -24,7 +24,7 @@ public class AIMovementState : IEntityState
     public void OnExit() {
     }
 
-    public void ReadyForNextState() {
+    public void ProgressState() {
         //TODO : wait for the player to be finished
         Debug.Log("FINISHED STATE");
         NextState = new AIMovementState();

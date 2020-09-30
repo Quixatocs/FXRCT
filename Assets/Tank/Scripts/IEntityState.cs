@@ -19,4 +19,9 @@
     /// Method to be called when exiting the state
     /// </summary>
     void OnExit();
+
+    /// <summary>
+    /// Method for triggering the default next state transition
+    /// </summary>
+    void ProgressState();
 }
