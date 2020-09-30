@@ -13,7 +13,7 @@
     /// <summary>
     /// Method to be called when entering the state
     /// </summary>
-    void OnEnter();
+    void OnEnter(StateMachine controller);
     
     /// <summary>
     /// Method to be called when exiting the state

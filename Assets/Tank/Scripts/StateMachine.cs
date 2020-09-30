@@ -6,6 +6,9 @@ public abstract class StateMachine : MonoBehaviour
     #region State Machine Fields
 
     private IEntityState currentState;
+
+    public IEntityState CurrentState => currentState;
+
     private Coroutine stateCompleteCheck;
 
     #endregion
@@ -16,7 +19,7 @@ public abstract class StateMachine : MonoBehaviour
     /// Sets the next state in the state machine, clears up the previous state
     /// and calls OnEnter for the new state
     /// </summary>
-    private void SetState(IEntityState nextState) {
+    protected void SetState(IEntityState nextState) {
         
         // Exit previous state
         if (currentState != null) {
@@ -26,7 +29,7 @@ public abstract class StateMachine : MonoBehaviour
         currentState = nextState;
         
         if (currentState != null) {
-            currentState.OnEnter();
+            currentState.OnEnter(this);
             
             if (stateCompleteCheck == null) {
                 stateCompleteCheck = StartCoroutine(CheckComplete());
