@@ -16,10 +16,18 @@ public class AIController : StateMachine
 
     #endregion
 
-    #region Fields
+    #region Fields and Properties
 
-    public Vector3 targetLocation;
+    private Vector3 targetLocation;
+
+    public Vector3 TargetLocation {
+        set => targetLocation = value;
+    }
+
     private NavMeshAgent navMeshAgent;
+    
+    public delegate void OnAIUIMessageUpdated(string newMessage);
+    public static event OnAIUIMessageUpdated onAIUIMessageUpdated;
 
     #endregion
     
@@ -68,7 +76,9 @@ public class AIController : StateMachine
 
     #region Public Methods
     
-    
+    public static void SendOnAIUIMessageUpdated(string newMessage) {
+        onAIUIMessageUpdated?.Invoke(newMessage);
+    }
 
     #endregion
 }

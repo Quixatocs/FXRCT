@@ -1,5 +1,4 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class AIWaitState : IEntityState
@@ -9,6 +8,8 @@ public class AIWaitState : IEntityState
     private StateMachine aiController;
     private bool isWaiting;
     
+    private WaitForSeconds wait = new WaitForSeconds(2f);
+    
     public bool IsComplete { get; }
     public IEntityState NextState { get; }
     public void OnEnter(StateMachine controller) {
@@ -17,6 +18,8 @@ public class AIWaitState : IEntityState
         aiController = controller as AIController;
         isWaiting = true;
         enterStateCoroutine = aiController.StartCoroutine(WaitForPlayer());
+        
+        AIController.SendOnAIUIMessageUpdated("Waiting for Player");
     }
 
     public void OnExit() {
@@ -34,7 +37,8 @@ public class AIWaitState : IEntityState
     private IEnumerator WaitForPlayer() {
 
         while (isWaiting) {
-            yield return new WaitForEndOfFrame(); 
+            // Dont need to poll each frame so a slower yield is ok
+            yield return wait;
         }
 
         ProgressState();
