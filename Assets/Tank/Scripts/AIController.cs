@@ -72,7 +72,7 @@ public class AIController : StateMachine
 
     #region Public Methods
     
-    public static void SendOnAIUIMessageUpdated(string newMessage) {
+    public void SendOnAIUIMessageUpdated(string newMessage) {
         onAIUIMessageUpdated?.Invoke(newMessage);
     }
 

@@ -5,10 +5,10 @@ public class AIWaitState : IEntityState
 {
     
     private Coroutine enterStateCoroutine;
-    private StateMachine aiController;
+    private AIController aiController;
     private bool isWaiting;
     
-    private WaitForSeconds wait = new WaitForSeconds(2f);
+    private WaitForSeconds wait = new WaitForSeconds(1f);
     
     public bool IsComplete { get; }
     public IEntityState NextState { get; }
@@ -19,7 +19,7 @@ public class AIWaitState : IEntityState
         isWaiting = true;
         enterStateCoroutine = aiController.StartCoroutine(WaitForPlayer());
         
-        AIController.SendOnAIUIMessageUpdated("Waiting for Player");
+        aiController.SendOnAIUIMessageUpdated("Waiting for Player");
     }
 
     public void OnExit() {

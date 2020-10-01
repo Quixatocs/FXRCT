@@ -9,7 +9,7 @@
         PlayerController playerController = controller as PlayerController;
 
         playerController.TargetLocation = playerController.SelectedTargetLocation;
-        PlayerController.SendOnPlayerUIMessageUpdated("Moving to Location");
+        playerController.SendOnPlayerUIMessageUpdated("Moving to Location");
     }
 
     public void OnExit() {}

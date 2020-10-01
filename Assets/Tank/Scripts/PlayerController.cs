@@ -92,7 +92,7 @@ public class PlayerController : StateMachine
 
     #region Public Methods
     
-    public static void SendOnPlayerUIMessageUpdated(string newMessage) {
+    public void SendOnPlayerUIMessageUpdated(string newMessage) {
         onPlayerUIMessageUpdated?.Invoke(newMessage);
     }
 

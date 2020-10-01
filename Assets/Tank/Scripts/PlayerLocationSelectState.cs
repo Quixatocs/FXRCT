@@ -1,11 +1,17 @@
 ﻿
 public class PlayerLocationSelectState : IEntityState
 {
+    
+    private PlayerController playerController;
+    
     public bool IsComplete { get; private set; }
     public IEntityState NextState { get; private set; }
     public void OnEnter(StateMachine controller) {
+        if (controller == null) return;
+
+        PlayerController playerController = controller as PlayerController;
         
-        PlayerController.SendOnPlayerUIMessageUpdated("Selecting Location");
+        playerController.SendOnPlayerUIMessageUpdated("Selecting Location");
     }
 
     public void OnExit() {}
