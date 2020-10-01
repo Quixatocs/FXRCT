@@ -16,6 +16,8 @@ public class AIWaitState : IEntityState
         if (controller == null) return;
 
         aiController = controller as AIController;
+        PlayerController.onPlayerTurnComplete += SetNoLongerWaiting;
+        
         isWaiting = true;
         enterStateCoroutine = aiController.StartCoroutine(WaitForPlayer());
         
@@ -23,6 +25,7 @@ public class AIWaitState : IEntityState
     }
 
     public void OnExit() {
+        PlayerController.onPlayerTurnComplete -= SetNoLongerWaiting;
         
         if (enterStateCoroutine != null) {
             aiController.StopCoroutine(enterStateCoroutine);

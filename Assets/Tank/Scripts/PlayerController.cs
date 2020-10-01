@@ -34,6 +34,9 @@ public class PlayerController : StateMachine
     
     public delegate void OnPlayerUIMessageUpdated(string newMessage);
     public static event OnPlayerUIMessageUpdated onPlayerUIMessageUpdated;
+    
+    public delegate void OnPlayerTurnComplete(); 
+    public static event OnPlayerTurnComplete onPlayerTurnComplete;
 
     #endregion
     
@@ -94,6 +97,10 @@ public class PlayerController : StateMachine
     
     public void SendOnPlayerUIMessageUpdated(string newMessage) {
         onPlayerUIMessageUpdated?.Invoke(newMessage);
+    }
+    
+    public void SendOnPlayerTurnComplete() {
+        onPlayerTurnComplete?.Invoke();
     }
 
     #endregion

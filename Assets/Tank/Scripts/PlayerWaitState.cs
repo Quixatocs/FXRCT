@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerWaitState : IEntityState
 {
     private Coroutine enterStateCoroutine;
-    private StateMachine playerController;
+    private PlayerController playerController;
     private bool isWaiting;
     
     private WaitForSeconds wait = new WaitForSeconds(1f);
@@ -15,13 +15,16 @@ public class PlayerWaitState : IEntityState
         if (controller == null) return;
 
         playerController = controller as PlayerController;
+        AIController.onAITurnComplete += SetNoLongerWaiting;
+        
         isWaiting = true;
         enterStateCoroutine = playerController.StartCoroutine(WaitForAI());
         
-        PlayerController.SendOnPlayerUIMessageUpdated("Waiting for AI");
+        playerController.SendOnPlayerUIMessageUpdated("Waiting for AI");
     }
 
     public void OnExit() {
+        AIController.onAITurnComplete -= SetNoLongerWaiting;
         
         if (enterStateCoroutine != null) {
             playerController.StopCoroutine(enterStateCoroutine);

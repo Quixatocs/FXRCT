@@ -28,6 +28,9 @@ public class AIController : StateMachine
     
     public delegate void OnAIUIMessageUpdated(string newMessage);
     public static event OnAIUIMessageUpdated onAIUIMessageUpdated;
+    
+    public delegate void OnAITurnComplete(); 
+    public static event OnAITurnComplete onAITurnComplete;
 
     #endregion
     
@@ -74,6 +77,10 @@ public class AIController : StateMachine
     
     public void SendOnAIUIMessageUpdated(string newMessage) {
         onAIUIMessageUpdated?.Invoke(newMessage);
+    }
+    
+    public void SendOnAITurnComplete() {
+        onAITurnComplete?.Invoke();
     }
 
     #endregion

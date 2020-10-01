@@ -2,8 +2,6 @@
 public class PlayerLocationSelectState : IEntityState
 {
     
-    private PlayerController playerController;
-    
     public bool IsComplete { get; private set; }
     public IEntityState NextState { get; private set; }
     public void OnEnter(StateMachine controller) {
