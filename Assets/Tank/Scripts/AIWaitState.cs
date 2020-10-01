@@ -34,7 +34,7 @@ public class AIWaitState : IEntityState
     }
     
     public void ProgressState() {
-        NextState = new AITurnState();
+        NextState = new AISolutionAcquisitionState();
         IsComplete = true;
     }
 

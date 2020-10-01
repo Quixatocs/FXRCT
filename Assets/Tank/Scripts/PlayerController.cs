@@ -12,7 +12,8 @@ public class PlayerController : StateMachine
     
     #region Editor Properties
 
-    [SerializeField] public Collider GroundCollider;
+    public Collider GroundCollider;
+    [SerializeField] private GameObject shellPrefab;
 
     #endregion
     

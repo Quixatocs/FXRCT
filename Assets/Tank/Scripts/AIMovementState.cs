@@ -18,7 +18,7 @@ public class AIMovementState : IEntityState
         
         Vector3 newTarget = new Vector3(newXposition, newYposition, newZposition);
 
-        aiController.TargetLocation = newTarget;
+        aiController.TargetMovementLocation = newTarget;
         aiController.SendOnAIUIMessageUpdated("Moving to Location");
     }
 

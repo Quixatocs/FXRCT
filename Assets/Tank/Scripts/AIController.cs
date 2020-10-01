@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class AIController : StateMachine
@@ -12,19 +14,31 @@ public class AIController : StateMachine
 
     #region Editor Properties
 
-    [SerializeField] public Collider GroundCollider;
+    public Collider GroundCollider;
+    [SerializeField] private GameObject shellPrefab;
 
     #endregion
 
     #region Fields and Properties
 
-    private Vector3 targetLocation;
+    private Vector3 targetMovementLocation;
 
-    public Vector3 TargetLocation {
-        set => targetLocation = value;
+    public Vector3 TargetMovementLocation {
+        set => targetMovementLocation = value;
     }
-
+    
     private NavMeshAgent navMeshAgent;
+    
+
+    [NonSerialized]
+    public List<float> LaunchAngles = new List<float>();
+    
+    [NonSerialized]
+    public List<float> LaunchStrengths = new List<float>();
+    
+    [NonSerialized]
+    public List<float> LaunchHitToTargetDistances = new List<float>();
+    
     
     public delegate void OnAIUIMessageUpdated(string newMessage);
     public static event OnAIUIMessageUpdated onAIUIMessageUpdated;
@@ -52,13 +66,13 @@ public class AIController : StateMachine
 
     private void Update() {
         if (CurrentState.GetType() == typeof(AIMovementState)) {
-            transform.LookAt(targetLocation);
+            transform.LookAt(targetMovementLocation);
 
-            navMeshAgent.destination = targetLocation;
+            navMeshAgent.destination = targetMovementLocation;
             
-            if (Vector3.Distance(transform.position, targetLocation) < 0.5f) {
+            if (Vector3.Distance(transform.position, targetMovementLocation) < 0.5f) {
                 navMeshAgent.destination = transform.position;
-                transform.position = targetLocation;
+                transform.position = targetMovementLocation;
 
                 CurrentState.ProgressState();
             }
@@ -81,6 +95,10 @@ public class AIController : StateMachine
     
     public void SendOnAITurnComplete() {
         onAITurnComplete?.Invoke();
+    }
+
+    public void LaunchPayload() {
+        //Instantiate()
     }
 
     #endregion
