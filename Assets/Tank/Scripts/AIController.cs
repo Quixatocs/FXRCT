@@ -34,7 +34,6 @@ public class AIController : StateMachine
     #region Monobehaviour Methods
 
     private void Awake() {
-        // Singleton implementation
         if (instance != null)
         {
             Destroy(gameObject);
@@ -55,15 +54,12 @@ public class AIController : StateMachine
             navMeshAgent.destination = targetLocation;
             
             if (Vector3.Distance(transform.position, targetLocation) < 0.5f) {
-                Debug.Log("GOT THERE");
                 navMeshAgent.destination = transform.position;
                 transform.position = targetLocation;
 
                 CurrentState.ProgressState();
             }
         }
-        
-        
     }
 
     #endregion

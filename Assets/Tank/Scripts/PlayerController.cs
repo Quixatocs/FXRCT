@@ -1,4 +1,7 @@
-﻿public class PlayerController : StateMachine
+﻿using UnityEngine;
+using UnityEngine.AI;
+
+public class PlayerController : StateMachine
 {
     
     #region Singleton Instance
@@ -7,10 +10,36 @@
 
     #endregion
     
+    #region Editor Properties
+
+    [SerializeField] public Collider GroundCollider;
+
+    #endregion
+    
+    #region Fields and Properties
+    
+    private Vector3 selectedTargetLocation;
+
+    public Vector3 SelectedTargetLocation {
+        get => selectedTargetLocation;
+    }
+
+    private Vector3 targetLocation;
+
+    public Vector3 TargetLocation {
+        set => targetLocation = value;
+    }
+
+    private NavMeshAgent navMeshAgent;
+    
+    public delegate void OnPlayerUIMessageUpdated(string newMessage);
+    public static event OnPlayerUIMessageUpdated onPlayerUIMessageUpdated;
+
+    #endregion
+    
     #region Monobehaviour Methods
 
     private void Awake() {
-        // Singleton implementation
         if (instance != null)
         {
             Destroy(gameObject);
@@ -20,8 +49,52 @@
     }
 
     private void Start() {
-        //TODO transition to the opening state
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        instance.SetState(new PlayerLocationSelectState());
     }
     
+    private void Update() {
+
+        if (CurrentState.GetType() == typeof(PlayerLocationSelectState)) {
+            if (Input.GetMouseButtonDown(0)) {
+                RaycastHit hit;
+                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100)) {
+                    if (hit.collider == GroundCollider) {
+                        selectedTargetLocation = hit.point;
+                        
+                        CurrentState.ProgressState();
+                    }
+                }
+            }
+        }
+        
+        if (CurrentState.GetType() == typeof(PlayerMovementState)) {
+            transform.LookAt(targetLocation);
+
+            navMeshAgent.destination = targetLocation;
+            
+            if (Vector3.Distance(transform.position, targetLocation) < 0.5f) {
+                navMeshAgent.destination = transform.position;
+                transform.position = targetLocation;
+
+                CurrentState.ProgressState();
+            }
+        }
+    }
+    
+    #endregion
+    
+    #region Private Methods
+
+    
+
+    #endregion
+
+    #region Public Methods
+    
+    public static void SendOnPlayerUIMessageUpdated(string newMessage) {
+        onPlayerUIMessageUpdated?.Invoke(newMessage);
+    }
+
     #endregion
 }
