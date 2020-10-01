@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+﻿using System.ComponentModel.Design.Serialization;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class PlayerController : StateMachine
 {
     
     #region Singleton Instance
+
+    public static PlayerController Instance => instance;
 
     private static PlayerController instance;
 
@@ -14,6 +17,7 @@ public class PlayerController : StateMachine
 
     public Collider GroundCollider;
     [SerializeField] private GameObject shellPrefab;
+    [SerializeField] private Transform shellspawn;
 
     #endregion
     

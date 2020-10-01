@@ -7,6 +7,8 @@ public class AIController : StateMachine
 {
     
     #region Singleton Instance
+    
+    public static AIController Instance => instance;
 
     private static AIController instance;
 
@@ -16,6 +18,7 @@ public class AIController : StateMachine
 
     public Collider GroundCollider;
     [SerializeField] private GameObject shellPrefab;
+    [SerializeField] private Transform shellspawn;
 
     #endregion
 
@@ -65,6 +68,11 @@ public class AIController : StateMachine
     }
 
     private void Update() {
+        shellspawn.transform.LookAt(PlayerController.Instance.transform);
+        if (LaunchAngles.Count > 0) {
+            shellspawn.transform.Rotate(Vector3.right, -LaunchAngles[LaunchAngles.Count - 1]);
+        }
+        
         if (CurrentState.GetType() == typeof(AIMovementState)) {
             transform.LookAt(targetMovementLocation);
 
@@ -98,7 +106,13 @@ public class AIController : StateMachine
     }
 
     public void LaunchPayload() {
-        //Instantiate()
+        //shellspawn.rotation = Quaternion.Euler(-LaunchAngles[LaunchAngles.Count - 1], shellspawn.rotation.y, shellspawn.rotation.z);
+        GameObject newShell = Instantiate(shellPrefab, shellspawn.position, shellspawn.rotation);
+        
+        Rigidbody shellRigidbody = newShell.GetComponent<Rigidbody>();
+        shellspawn.transform.Rotate(Vector3.left, -LaunchAngles[LaunchAngles.Count - 1]);
+
+        shellRigidbody.velocity = shellspawn.forward * LaunchStrengths[LaunchStrengths.Count - 1];
     }
 
     #endregion
