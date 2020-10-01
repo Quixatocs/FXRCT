@@ -9,8 +9,8 @@ public class PlayerWaitState : IEntityState
     
     private WaitForSeconds wait = new WaitForSeconds(1f);
     
-    public bool IsComplete { get; }
-    public IEntityState NextState { get; }
+    public bool IsComplete { get; private set; }
+    public IEntityState NextState { get; private set; }
     public void OnEnter(StateMachine controller) {
         if (controller == null) return;
 
@@ -33,16 +33,15 @@ public class PlayerWaitState : IEntityState
     }
     
     public void ProgressState() {
-        throw new System.NotImplementedException();
+        NextState = new PlayerTurnState();
+        IsComplete = true;
     }
 
     private IEnumerator WaitForAI() {
-
         while (isWaiting) {
             // Dont need to poll each frame so a slower yield is ok
             yield return wait;
         }
-
         ProgressState();
     }
 
