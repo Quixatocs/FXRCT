@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Design.Serialization;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
@@ -99,7 +98,7 @@ public class PlayerController : StateMachine
 
     private void Start() {
         navMeshAgent = GetComponent<NavMeshAgent>();
-        instance.SetState(new PlayerLocationSelectState());
+        instance.SetState(new PlayerWaitState(new PlayerLocationSelectState()));
     }
     
     private void Update() {
@@ -133,12 +132,6 @@ public class PlayerController : StateMachine
         }
     }
     
-    #endregion
-    
-    #region Private Methods
-
-    
-
     #endregion
 
     #region Public Methods

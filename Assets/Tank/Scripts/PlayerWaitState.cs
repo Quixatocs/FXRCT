@@ -8,6 +8,10 @@ public class PlayerWaitState : IEntityState
     private bool isWaiting;
     
     private WaitForSeconds wait = new WaitForSeconds(1f);
+
+    public PlayerWaitState(IEntityState nextState) {
+        NextState = nextState;
+    }
     
     public bool IsComplete { get; private set; }
     public IEntityState NextState { get; private set; }
@@ -33,7 +37,6 @@ public class PlayerWaitState : IEntityState
     }
     
     public void ProgressState() {
-        NextState = new PlayerSolutionAcquisitionState();
         IsComplete = true;
     }
 

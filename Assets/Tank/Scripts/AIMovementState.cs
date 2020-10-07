@@ -1,15 +1,15 @@
 ﻿
 using UnityEngine;
 
-public class AIMovementState : IEntityState
-{
+public class AIMovementState : IEntityState {
+    private AIController aiController;
     public bool IsComplete { get; private set; }
     public IEntityState NextState { get; private set; }
     
     public void OnEnter(StateMachine controller) {
         if (controller == null) return;
 
-        AIController aiController = controller as AIController;
+        aiController = controller as AIController;
 
         Bounds bounds = aiController.GroundCollider.bounds;
         float newXposition = Random.Range(bounds.min.x, bounds.max.x);
@@ -27,6 +27,7 @@ public class AIMovementState : IEntityState
     public void ProgressState() {
         NextState = new AIWaitState();
         IsComplete = true;
+        aiController.SendOnAITurnComplete();
     }
         
     

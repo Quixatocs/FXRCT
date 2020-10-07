@@ -18,7 +18,7 @@
     }
 
     public void ProgressState() {
-        NextState = new PlayerWaitState();
+        NextState = new PlayerWaitState(new PlayerSolutionAcquisitionState());
         IsComplete = true;
     }
         
