@@ -19,10 +19,16 @@ public class AIController : StateMachine
     public Collider GroundCollider;
     [SerializeField] private GameObject shellPrefab;
     [SerializeField] private Transform shellspawn;
+    
+    [SerializeField] private GameObject aIWinUI;
 
     #endregion
 
     #region Fields and Properties
+
+    public GameObject AIWinUI {
+        get => aIWinUI;
+    }
 
     private Vector3 targetMovementLocation;
 

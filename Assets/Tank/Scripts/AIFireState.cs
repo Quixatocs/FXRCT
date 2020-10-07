@@ -11,27 +11,33 @@ public class AIFireState : IEntityState
 
         aiController = controller as AIController;
 
-        EventManager.onPayloadCollision += SetImpactDistance;
+        EventManager.onPayloadCollision += AnalyseImpactDistance;
         
         aiController.SendOnAIUIMessageUpdated("Payload Launching");
         aiController.LaunchPayload();
     }
 
     public void OnExit() {
-        EventManager.onPayloadCollision -= SetImpactDistance;
-        
-        aiController.SendOnAITurnComplete();
+        EventManager.onPayloadCollision -= AnalyseImpactDistance;
     }
 
     public void ProgressState() {
         NextState = new AIWaitState();
         IsComplete = true;
+        aiController.SendOnAITurnComplete();
     }
 
-    public void SetImpactDistance(Vector3 hitLocation) {
+    public void AnalyseImpactDistance(Vector3 hitLocation) {
         float distance = Vector3.Distance(hitLocation, PlayerController.Instance.transform.position);
         Debug.Log($"AI payload Distance to Player : {distance}");
         aiController.LaunchHitToTargetDistances.Add(distance);
+
+        if (distance < 2f) {
+            NextState = new AIWinState();
+            IsComplete = true;
+            return;
+        }
+        
         ProgressState();
     }
 }

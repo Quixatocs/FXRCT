@@ -23,10 +23,16 @@ public class PlayerController : StateMachine
     [SerializeField] private Button launchButton;
     [SerializeField] private GameObject shellPrefab;
     [SerializeField] private Transform shellspawn;
+    
+    [SerializeField] private GameObject playerWinUI;
 
     #endregion
     
     #region Fields and Properties
+    
+    public GameObject PlayerWinUI {
+        get => playerWinUI;
+    }
     
     public InputField AngleInputField {
         get => angleInputField;

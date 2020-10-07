@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerFireState : IEntityState
 {
@@ -11,26 +10,32 @@ public class PlayerFireState : IEntityState
 
         playerController = controller as PlayerController;
 
-        EventManager.onPayloadCollision += SetImpactDistance;
+        EventManager.onPayloadCollision += AnalyseImpactDistance;
         
         playerController.SendOnPlayerUIMessageUpdated("Payload Launching");
         playerController.LaunchPayload();
     }
 
     public void OnExit() {
-        EventManager.onPayloadCollision -= SetImpactDistance;
-        
-        playerController.SendOnPlayerTurnComplete();
+        EventManager.onPayloadCollision -= AnalyseImpactDistance;
     }
 
     public void ProgressState() {
         NextState = new PlayerWaitState();
         IsComplete = true;
+        playerController.SendOnPlayerTurnComplete();
     }
     
-    public void SetImpactDistance(Vector3 hitLocation) {
+    public void AnalyseImpactDistance(Vector3 hitLocation) {
         float distance = Vector3.Distance(hitLocation, AIController.Instance.transform.position);
         Debug.Log($"Player payload Distance to AI : {distance}");
+        
+        if (distance < 2f) {
+            NextState = new PlayerWinState();
+            IsComplete = true;
+            return;
+        }
+        
         ProgressState();
     }
 }
