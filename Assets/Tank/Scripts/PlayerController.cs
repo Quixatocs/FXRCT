@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.Design.Serialization;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class PlayerController : StateMachine
 {
@@ -16,12 +17,32 @@ public class PlayerController : StateMachine
     #region Editor Properties
 
     public Collider GroundCollider;
+    [SerializeField] private GameObject playerControlsUI;
+    [SerializeField] private InputField angleInputField;
+    [SerializeField] private InputField strengthInputField;
+    [SerializeField] private Button launchButton;
     [SerializeField] private GameObject shellPrefab;
     [SerializeField] private Transform shellspawn;
 
     #endregion
     
     #region Fields and Properties
+    
+    public InputField AngleInputField {
+        get => angleInputField;
+    } 
+    
+    public InputField StrengthInputField {
+        get => strengthInputField;
+    } 
+    
+    public Button LaunchButton {
+        get => launchButton;
+    } 
+    
+    public GameObject PlayerControlsUI {
+        get => playerControlsUI;
+    } 
     
     private Vector3 selectedTargetLocation;
 
@@ -33,6 +54,20 @@ public class PlayerController : StateMachine
 
     public Vector3 TargetLocation {
         set => targetLocation = value;
+    }
+
+    private float launchAngle;
+
+    public float LaunchAngle {
+        get => launchAngle;
+        set => launchAngle = value;
+    }
+    
+    private float launchStrength;
+
+    public float LaunchStrength {
+        get => launchStrength;
+        set => launchStrength = value;
     }
 
     private NavMeshAgent navMeshAgent;
@@ -62,7 +97,9 @@ public class PlayerController : StateMachine
     }
     
     private void Update() {
-
+        shellspawn.transform.LookAt(AIController.Instance.transform);
+        shellspawn.transform.Rotate(Vector3.right, -launchAngle);
+        
         if (CurrentState.GetType() == typeof(PlayerLocationSelectState)) {
             if (Input.GetMouseButtonDown(0)) {
                 RaycastHit hit;
@@ -106,6 +143,16 @@ public class PlayerController : StateMachine
     
     public void SendOnPlayerTurnComplete() {
         onPlayerTurnComplete?.Invoke();
+    }
+    
+    public void LaunchPayload() {
+        GameObject newShell = Instantiate(shellPrefab, shellspawn.position, shellspawn.rotation);
+        
+        Rigidbody shellRigidbody = newShell.GetComponent<Rigidbody>();
+        
+        newShell.transform.Rotate(Vector3.left, -launchAngle);
+        
+        shellRigidbody.velocity = shellspawn.forward * launchStrength;
     }
 
     #endregion

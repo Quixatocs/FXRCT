@@ -33,7 +33,7 @@ public class PlayerWaitState : IEntityState
     }
     
     public void ProgressState() {
-        NextState = new PlayerTurnState();
+        NextState = new PlayerSolutionAcquisitionState();
         IsComplete = true;
     }
 

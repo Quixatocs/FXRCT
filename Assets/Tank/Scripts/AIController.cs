@@ -106,7 +106,6 @@ public class AIController : StateMachine
     }
 
     public void LaunchPayload() {
-        //shellspawn.rotation = Quaternion.Euler(-LaunchAngles[LaunchAngles.Count - 1], shellspawn.rotation.y, shellspawn.rotation.z);
         GameObject newShell = Instantiate(shellPrefab, shellspawn.position, shellspawn.rotation);
         
         Rigidbody shellRigidbody = newShell.GetComponent<Rigidbody>();
