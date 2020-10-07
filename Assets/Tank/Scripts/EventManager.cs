@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// A class representing an game-wide accessible Event Manager
+/// </summary>
 public class EventManager : MonoBehaviour
 {
     #region Singleton Instance

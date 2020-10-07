@@ -1,10 +1,15 @@
-﻿
-using UnityEngine;
-using UnityEngine.UI;
-
+﻿/// <summary>
+/// Class to represent the player selecting their launch angle and strength
+/// </summary>
 public class PlayerSolutionAcquisitionState : IEntityState {
-    
+
+    #region Fields
+
     private PlayerController playerController;
+
+    #endregion
+    
+    #region IEntityState Implementation
     
     public bool IsComplete { get; private set; }
     public IEntityState NextState { get; private set; }
@@ -31,6 +36,9 @@ public class PlayerSolutionAcquisitionState : IEntityState {
         NextState = new PlayerFireState();
         IsComplete = true;
     }
+    #endregion
+
+    #region Private Methods
 
     private void SetAngle(string newAngle) {
         playerController.LaunchAngle = float.Parse(newAngle);
@@ -39,6 +47,6 @@ public class PlayerSolutionAcquisitionState : IEntityState {
     private void SetStrength(string newStrength) {
         playerController.LaunchStrength = float.Parse(newStrength);
     }
-    
-    
+
+    #endregion
 }

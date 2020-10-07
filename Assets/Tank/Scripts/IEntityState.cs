@@ -21,7 +21,7 @@
     void OnExit();
 
     /// <summary>
-    /// Method for triggering the default next state transition
+    /// Method for triggering the default next state transition///../////////
     /// </summary>
     void ProgressState();
 }

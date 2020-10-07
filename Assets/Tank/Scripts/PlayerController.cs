@@ -2,6 +2,9 @@
 using UnityEngine.AI;
 using UnityEngine.UI;
 
+/// <summary>
+/// A class to represent the player controller and all associated UI and GameObjects
+/// </summary>
 public class PlayerController : StateMachine
 {
     
@@ -136,14 +139,23 @@ public class PlayerController : StateMachine
 
     #region Public Methods
     
+    /// <summary>
+    /// Sends the new message to the listening UI components
+    /// </summary>
     public void SendOnPlayerUIMessageUpdated(string newMessage) {
         onPlayerUIMessageUpdated?.Invoke(newMessage);
     }
     
+    /// <summary>
+    /// Sends the trigger that the Player has completed their turn to listening entities
+    /// </summary>
     public void SendOnPlayerTurnComplete() {
         onPlayerTurnComplete?.Invoke();
     }
     
+    /// <summary>
+    /// Instantiates and launches a new shell 
+    /// </summary>
     public void LaunchPayload() {
         GameObject newShell = Instantiate(shellPrefab, shellspawn.position, shellspawn.rotation);
         

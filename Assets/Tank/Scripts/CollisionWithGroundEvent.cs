@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// A monobehaviour that controls the collision of a payload with the ground collider
+/// </summary>
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(AudioSource))]
 public class CollisionWithGroundEvent : MonoBehaviour

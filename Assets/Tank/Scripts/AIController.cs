@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// Class to represent the controller of the computer player
+/// </summary>
 public class AIController : StateMachine
 {
     
@@ -37,7 +40,6 @@ public class AIController : StateMachine
     }
     
     private NavMeshAgent navMeshAgent;
-    
 
     [NonSerialized]
     public List<float> LaunchAngles = new List<float>();
@@ -95,22 +97,25 @@ public class AIController : StateMachine
 
     #endregion
 
-    #region Private Methods
-
-    
-
-    #endregion
-
     #region Public Methods
     
+    /// <summary>
+    /// Sends the AIUI update string to any listening UI components
+    /// </summary>
     public void SendOnAIUIMessageUpdated(string newMessage) {
         onAIUIMessageUpdated?.Invoke(newMessage);
     }
     
+    /// <summary>
+    /// Sends the AI Turn Complete event to any listening player states
+    /// </summary>
     public void SendOnAITurnComplete() {
         onAITurnComplete?.Invoke();
     }
 
+    /// <summary>
+    /// Launches the payload based on the last calculated components from the Solution Acquisition state
+    /// </summary>
     public void LaunchPayload() {
         GameObject newShell = Instantiate(shellPrefab, shellspawn.position, shellspawn.rotation);
         

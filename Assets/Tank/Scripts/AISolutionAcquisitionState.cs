@@ -1,15 +1,27 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// A class representing the Solution Acquisition state for the AI which
+/// calculates and assigns the next firing angle for the AI.
+///
+/// The angle is calculated based on the distance of the last hit location to the player
+/// If it was closer than the previous distance it will use this as the jumping point for the next angle guess
+/// </summary>
 public class AISolutionAcquisitionState : IEntityState
 {
-    
+    #region Fields
+
     private Coroutine enterStateCoroutine;
     private AIController aiController;
 
     private const float RANDOM_ANGLE_RANGE = 10f;
 
-    readonly WaitForSeconds drammaticWait = new WaitForSeconds(0.1f);
+    readonly WaitForSeconds drammaticWait = new WaitForSeconds(0.6f);
+
+    #endregion
+
+    #region IEntityState Implementation
     
     public bool IsComplete { get; private set; }
     public IEntityState NextState { get; private set; }
@@ -35,6 +47,14 @@ public class AISolutionAcquisitionState : IEntityState
         IsComplete = true;
     }
     
+    #endregion
+
+    #region Private Methods
+    
+    /// <summary>
+    /// Calculates the angle for the next shot after two hardcoded attempts have been made
+    /// Waits inbetween each part of the calculation for drammatic ingame effect
+    /// </summary>
     private IEnumerator TakeTurn() {
         yield return drammaticWait;
         aiController.SendOnAIUIMessageUpdated("Calculating Launch Angle...");
@@ -84,4 +104,5 @@ public class AISolutionAcquisitionState : IEntityState
         
         ProgressState();
     }
+    #endregion
 }

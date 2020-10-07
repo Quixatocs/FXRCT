@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Class representing the abstract statemachine that runs through various individual IEntityStates
+/// </summary>
 public abstract class StateMachine : MonoBehaviour
 {
     #region State Machine Fields

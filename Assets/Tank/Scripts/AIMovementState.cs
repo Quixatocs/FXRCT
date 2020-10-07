@@ -1,8 +1,18 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// A state repersenting the AI Movement including calcuation of the destination location
+/// </summary>
 public class AIMovementState : IEntityState {
+
+    #region Fields
+
     private AIController aiController;
+
+    #endregion
+
+    #region IEntityState Implementation
+
     public bool IsComplete { get; private set; }
     public IEntityState NextState { get; private set; }
     
@@ -29,7 +39,6 @@ public class AIMovementState : IEntityState {
         IsComplete = true;
         aiController.SendOnAITurnComplete();
     }
-        
     
-    
+    #endregion
 }

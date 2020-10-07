@@ -1,6 +1,15 @@
-﻿public class PlayerMovementState : IEntityState {
-    
+﻿/// <summary>
+/// Class representing the movement of the player to its player-chosen location
+/// </summary>
+public class PlayerMovementState : IEntityState {
+
+    #region Fields
+
     private PlayerController playerController;
+
+    #endregion
+    
+    #region IEntityState Implementation
     public bool IsComplete { get; private set; }
     public IEntityState NextState { get; private set; }
     
@@ -21,7 +30,5 @@
         NextState = new PlayerWaitState(new PlayerSolutionAcquisitionState());
         IsComplete = true;
     }
-        
-    
-    
+    #endregion
 }

@@ -1,7 +1,15 @@
-﻿using UnityEngine;
-
+﻿/// <summary>
+/// Class representing the Win state for the player
+/// </summary>
 public class PlayerWinState : IEntityState {
+    
+    #region Fields
+
     private PlayerController playerController;
+
+    #endregion
+    
+    #region IEntityState Implementation
     public bool IsComplete { get; }
     public IEntityState NextState { get; }
     public void OnEnter(StateMachine controller) {
@@ -16,4 +24,6 @@ public class PlayerWinState : IEntityState {
     }
 
     public void ProgressState() {}
+    
+    #endregion
 }

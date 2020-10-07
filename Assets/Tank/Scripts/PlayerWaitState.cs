@@ -1,17 +1,30 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// A class representing the Wait State for the Player will progress on receiving the AI turn complete event
+/// </summary>
 public class PlayerWaitState : IEntityState
 {
+    #region Fields
+
     private Coroutine enterStateCoroutine;
     private PlayerController playerController;
     private bool isWaiting;
     
     private WaitForSeconds wait = new WaitForSeconds(1f);
 
+    #endregion
+
+    #region Constructors
+
     public PlayerWaitState(IEntityState nextState) {
         NextState = nextState;
     }
+
+    #endregion
+    
+    #region IEntityState Implementation
     
     public bool IsComplete { get; private set; }
     public IEntityState NextState { get; private set; }
@@ -39,6 +52,10 @@ public class PlayerWaitState : IEntityState
     public void ProgressState() {
         IsComplete = true;
     }
+    
+    #endregion
+
+    #region Private Methods
 
     private IEnumerator WaitForAI() {
         while (isWaiting) {
@@ -51,5 +68,6 @@ public class PlayerWaitState : IEntityState
     private void SetNoLongerWaiting() {
         isWaiting = false;
     }
+    #endregion
     
 }
