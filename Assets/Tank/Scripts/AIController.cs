@@ -110,8 +110,9 @@ public class AIController : StateMachine
         GameObject newShell = Instantiate(shellPrefab, shellspawn.position, shellspawn.rotation);
         
         Rigidbody shellRigidbody = newShell.GetComponent<Rigidbody>();
-        shellspawn.transform.Rotate(Vector3.left, -LaunchAngles[LaunchAngles.Count - 1]);
-
+        
+        newShell.transform.Rotate(Vector3.left, -LaunchAngles[LaunchAngles.Count - 1]);
+        
         shellRigidbody.velocity = shellspawn.forward * LaunchStrengths[LaunchStrengths.Count - 1];
     }
 

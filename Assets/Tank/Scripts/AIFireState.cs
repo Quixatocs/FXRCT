@@ -1,8 +1,8 @@
 ﻿
 public class AIFireState : IEntityState
 {
-    public bool IsComplete { get; }
-    public IEntityState NextState { get; }
+    public bool IsComplete { get; private set; }
+    public IEntityState NextState { get; private set; }
     public void OnEnter(StateMachine controller) {
         if (controller == null) return;
 
@@ -16,6 +16,7 @@ public class AIFireState : IEntityState
     public void OnExit() {}
 
     public void ProgressState() {
-        throw new System.NotImplementedException();
+        NextState = new AIWaitState();
+        IsComplete = true;
     }
 }

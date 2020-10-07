@@ -75,7 +75,7 @@ public class AISolutionAcquisitionState : IEntityState
         
         // As long as a strength value allows us to fire past the target then adjusting 
         // the angle is all we need to do to be able to eventually hit the target
-        aiController.LaunchStrengths.Add(30f);
+        aiController.LaunchStrengths.Add(20f);
         
         yield return drammaticWait;
         aiController.SendOnAIUIMessageUpdated("Solution Acquired!");
